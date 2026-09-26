@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Education — Command Line Studios</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: #0A0E1A;
+      color: #F0F4FF;
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    /* FLOATING NAV */
+    .float-nav {
+      position: fixed;
+      top: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 200;
+      display: flex;
+      gap: 2px;
+      background: rgba(17, 24, 40, 0.88);
+      backdrop-filter: blur(14px);
+      border: 1px solid #1E2A48;
+      border-radius: 30px;
+      padding: 6px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      max-width: 94vw;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .float-nav::-webkit-scrollbar { display: none; }
+    .float-nav a {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: #8B9CC0;
+      text-decoration: none;
+      padding: 9px 15px;
+      border-radius: 20px;
+      transition: color 0.2s, background 0.2s;
+      white-space: nowrap;
+    }
+    .float-nav a:hover { color: #00D4FF; background: #161D30; }
+    .float-nav a.active { color: #0A0E1A; background: #00D4FF; }
+    .float-nav a.privacy-link { color: #FFB347; }
+    .float-nav a.privacy-link:hover { background: #221B0C; }
+    .float-nav a.contact-link { color: #F0F4FF; border-left: 1px solid #1E2A48; margin-left: 4px; padding-left: 15px; }
+
+    /* PAGE HERO */
+    .page-hero {
+      padding: 116px 40px 48px;
+      text-align: center;
+      border-bottom: 1px solid #1E2540;
+    }
+    .back-link {
+      display: inline-block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: #4A5880;
+      text-decoration: none;
+      margin-bottom: 20px;
+      transition: color 0.2s;
+    }
+    .back-link:hover { color: #00D4FF; }
+    .cat-emoji-big { font-size: 40px; margin-bottom: 16px; }
+    .page-hero h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(30px, 5vw, 48px);
+      font-weight: 700;
+      color: #F0F4FF;
+      margin-bottom: 14px;
+    }
+    .page-hero p {
+      font-size: 16px;
+      color: #8B9CC0;
+      max-width: 560px;
+      margin: 0 auto;
+    }
+
+    /* SECTION */
+    .section { padding: 56px 40px; max-width: 900px; margin: 0 auto; }
+
+    /* APP BLOCK */
+    .app-block {
+      background: #111828;
+      border: 1px solid #1E2540;
+      border-radius: 16px;
+      padding: 36px;
+      margin-bottom: 28px;
+      display: flex;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+    .app-shot {
+      flex: 0 0 200px;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid #1E2A48;
+      background: #060C18;
+    }
+    .app-shot img { width: 100%; display: block; }
+    .app-info { flex: 1; min-width: 240px; }
+    .app-status {
+      display: inline-block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #FFB347;
+      background: #2A1C05;
+      border: 1px solid #4A3410;
+      border-radius: 20px;
+      padding: 4px 12px;
+      margin-bottom: 14px;
+    }
+    .app-info h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 24px;
+      font-weight: 700;
+      color: #F0F4FF;
+      margin-bottom: 10px;
+    }
+    .app-price {
+      font-family: 'JetBrains Mono', monospace;
+      color: #00D4FF;
+      font-size: 15px;
+      margin-bottom: 14px;
+    }
+    .app-info p.blurb { color: #8B9CC0; font-size: 15px; line-height: 1.7; margin-bottom: 16px; }
+    .app-audience {
+      font-size: 13px;
+      color: #4DD9AC;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .app-links { margin-top: 18px; }
+    .app-link-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: #F0F4FF;
+      text-decoration: none;
+      background: #0D1220;
+      border: 1px solid #1E2A48;
+      border-radius: 8px;
+      padding: 8px 16px;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .app-link-btn:hover { border-color: #FFB347; color: #FFB347; }
+
+    /* COMING SOON */
+    .coming-soon {
+      background: #0D1220;
+      border: 1px dashed #1E2A48;
+      border-radius: 16px;
+      padding: 48px;
+      text-align: center;
+      color: #4A5880;
+    }
+    .coming-soon .emoji { font-size: 28px; margin-bottom: 12px; }
+    .coming-soon h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      color: #8B9CC0;
+      font-size: 18px;
+      margin-bottom: 6px;
+    }
+    .coming-soon p { font-family: 'JetBrains Mono', monospace; font-size: 13px; }
+
+    /* FOOTER */
+    .footer { background: #060910; border-top: 1px solid #1E2540; padding: 48px 40px; text-align: center; }
+    .footer-logo { font-family: 'JetBrains Mono', monospace; font-size: 15px; color: #00D4FF; margin-bottom: 10px; }
+    .footer-tagline { font-size: 13px; color: #4A5880; margin-bottom: 28px; }
+    .contact-block { border-top: 1px solid #1E2540; padding-top: 28px; margin-top: 4px; }
+    .contact-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.15em; color: #00D4FF; text-transform: uppercase; margin-bottom: 10px; }
+    .contact-email {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: 'JetBrains Mono', monospace; font-size: 14px; color: #F0F4FF;
+      text-decoration: none; background: #111828; border: 1px solid #1E2540;
+      border-radius: 8px; padding: 10px 20px; transition: border-color 0.2s, color 0.2s;
+    }
+    .contact-email:hover { border-color: #00D4FF; color: #00D4FF; }
+    .footer-copy { font-size: 12px; color: #2A3050; margin-top: 28px; }
+
+    @media (max-width: 600px) {
+      .page-hero { padding: 96px 24px 36px; }
+      .section { padding: 40px 24px; }
+      .app-block { padding: 24px; flex-direction: column; }
+      .app-shot { flex: 0 0 auto; max-width: 160px; }
+      .float-nav a { padding: 8px 11px; font-size: 11px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- FLOATING NAV -->
+  <nav class="float-nav">
+    <a href="/categories/fitness.html">Fitness</a>
+    <a href="/categories/productivity.html">Productivity</a>
+    <a href="/categories/education.html" class="active">Education</a>
+    <a href="/categories/games.html">Games</a>
+    <a href="/privacy/index.html" class="privacy-link">Privacy</a>
+    <a href="mailto:support@cmdlinestudios.com" class="contact-link">Contact</a>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <header class="page-hero">
+    <a href="/index.html" class="back-link">← back to home</a>
+    <div class="cat-emoji-big">🔭</div>
+    <h1>Education</h1>
+    <p>Interactive apps that make learning tangible — explore concepts by doing, not just reading.</p>
+  </header>
+
+  <!-- APPS -->
+  <section class="section">
+
+    <div class="app-block">
+      <div class="app-shot">
+        <img src="/assets/screenshots/launchpad-splash.png" alt="Launchpad: Planetary Simulator splash screen">
+      </div>
+      <div class="app-info">
+        <span class="app-status">Coming soon to the App Store</span>
+        <h2>Launchpad: Planetary Simulator</h2>
+        <div class="app-price">$1.99 · one-time purchase</div>
+        <p class="blurb">Animate projectile motion side-by-side across any two of the 10 solar system bodies — Mercury through Pluto — each with its own real gravity value. Set your launch speed, angle, and height, hit Launch, and watch both trajectories race to the ground with full stats: range, max height, and flight time.</p>
+        <div class="app-audience">✓ Built for physics students &amp; professors — accuracy-first, hand-verified physics</div>
+        <div class="app-links">
+          <a href="/privacy/index.html#launchpad" class="app-link-btn">🔒 View privacy policy</a>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-logo">Command Line Studios, LLC</div>
+    <p class="footer-tagline">Independent iOS app studio</p>
+    <div class="contact-block">
+      <div class="contact-label">Get in touch</div>
+      <a class="contact-email" href="mailto:support@cmdlinestudios.com">✉ support@cmdlinestudios.com</a>
+    </div>
+    <p class="footer-copy">© 2026 Command Line Studios, LLC · All rights reserved</p>
+  </footer>
+
+</body>
+</html>

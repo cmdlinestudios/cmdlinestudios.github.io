@@ -16,10 +16,45 @@
       line-height: 1.6;
     }
 
+    /* FLOATING NAV */
+    .float-nav {
+      position: fixed;
+      top: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 200;
+      display: flex;
+      gap: 2px;
+      background: rgba(17, 24, 40, 0.88);
+      backdrop-filter: blur(14px);
+      border: 1px solid #1E2A48;
+      border-radius: 30px;
+      padding: 6px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      max-width: 94vw;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .float-nav::-webkit-scrollbar { display: none; }
+    .float-nav a {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: #8B9CC0;
+      text-decoration: none;
+      padding: 9px 15px;
+      border-radius: 20px;
+      transition: color 0.2s, background 0.2s;
+      white-space: nowrap;
+    }
+    .float-nav a:hover { color: #00D4FF; background: #161D30; }
+    .float-nav a.privacy-link { color: #FFB347; }
+    .float-nav a.privacy-link:hover { background: #221B0C; }
+    .float-nav a.contact-link { color: #F0F4FF; border-left: 1px solid #1E2A48; margin-left: 4px; padding-left: 15px; }
+
     /* HERO */
     .hero {
       background: #0A0E1A;
-      padding: 80px 40px 60px;
+      padding: 116px 40px 60px;
       text-align: center;
       border-bottom: 1px solid #1E2540;
     }
@@ -165,7 +200,7 @@
     }
     .phil-card p { font-size: 14px; color: #8B9CC0; line-height: 1.6; }
 
-    /* CATEGORIES */
+    /* CATEGORIES (now clickable) */
     .apps-section { background: #0A0E1A; }
     .cat-grid {
       display: grid;
@@ -178,7 +213,16 @@
       border: 1px solid #1E2540;
       border-radius: 12px;
       padding: 28px 24px;
+      text-decoration: none;
+      display: block;
+      transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
     }
+    .cat-card:hover {
+      transform: translateY(-4px);
+      border-color: #00D4FF;
+      background: #131B2E;
+    }
+    .cat-card.privacy-card:hover { border-color: #FFB347; }
     .cat-emoji { font-size: 28px; margin-bottom: 14px; }
     .cat-card h3 {
       font-family: 'Space Grotesk', sans-serif;
@@ -187,7 +231,17 @@
       color: #F0F4FF;
       margin-bottom: 8px;
     }
-    .cat-card p { font-size: 14px; color: #8B9CC0; line-height: 1.6; }
+    .cat-card p { font-size: 14px; color: #8B9CC0; line-height: 1.6; margin-bottom: 14px; }
+    .cat-arrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: #00D4FF;
+      opacity: 0;
+      transform: translateX(-4px);
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+    .cat-card.privacy-card .cat-arrow { color: #FFB347; }
+    .cat-card:hover .cat-arrow { opacity: 1; transform: translateX(0); }
 
     /* PRICING PROMISE */
     .price-section {
@@ -274,14 +328,25 @@
 
     /* RESPONSIVE */
     @media (max-width: 600px) {
-      .hero { padding: 60px 24px 40px; }
+      .hero { padding: 96px 24px 40px; }
       .section { padding: 48px 24px; }
       .price-promise { padding: 24px; gap: 24px; }
       .footer { padding: 32px 24px; }
+      .float-nav a { padding: 8px 11px; font-size: 11px; }
     }
   </style>
 </head>
 <body>
+
+  <!-- FLOATING NAV -->
+  <nav class="float-nav">
+    <a href="/categories/fitness.html">Fitness</a>
+    <a href="/categories/productivity.html">Productivity</a>
+    <a href="/categories/education.html">Education</a>
+    <a href="/categories/games.html">Games</a>
+    <a href="/privacy/index.html" class="privacy-link">Privacy</a>
+    <a href="mailto:support@cmdlinestudios.com" class="contact-link">Contact</a>
+  </nav>
 
   <!-- HERO -->
   <header class="hero">
@@ -329,12 +394,38 @@
     <div class="section">
       <div class="section-label">What we're working on</div>
       <h2>Apps for real life.</h2>
-      <p style="color:#8B9CC0;max-width:580px;">We're building across a range of categories — all with the same commitment to simplicity, fairness, and focus. Each app gets the time and care it deserves.</p>
+      <p style="color:#8B9CC0;max-width:580px;">Tap into a category to see what's built, what's in progress, and what's coming next.</p>
       <div class="cat-grid">
-        <div class="cat-card"><div class="cat-emoji">💪</div><h3>Fitness</h3><p>Tools to track your health and training — without the noise of features you'll never use.</p></div>
-        <div class="cat-card"><div class="cat-emoji">⏱</div><h3>Productivity</h3><p>Simple utilities that help you stay organized and on task, without the learning curve.</p></div>
-        <div class="cat-card"><div class="cat-emoji">🔭</div><h3>Education</h3><p>Interactive apps that make learning tangible — explore concepts by doing, not just reading.</p></div>
-        <div class="cat-card"><div class="cat-emoji">🎮</div><h3>Games</h3><p>Pure, focused gameplay. No in-app purchases, no energy timers, no pay-to-win. Just fun.</p></div>
+        <a href="/categories/fitness.html" class="cat-card">
+          <div class="cat-emoji">💪</div>
+          <h3>Fitness</h3>
+          <p>Tools to track your health and training — without the noise of features you'll never use.</p>
+          <span class="cat-arrow">View apps →</span>
+        </a>
+        <a href="/categories/productivity.html" class="cat-card">
+          <div class="cat-emoji">⏱</div>
+          <h3>Productivity</h3>
+          <p>Simple utilities that help you stay organized and on task, without the learning curve.</p>
+          <span class="cat-arrow">View apps →</span>
+        </a>
+        <a href="/categories/education.html" class="cat-card">
+          <div class="cat-emoji">🔭</div>
+          <h3>Education</h3>
+          <p>Interactive apps that make learning tangible — explore concepts by doing, not just reading.</p>
+          <span class="cat-arrow">View apps →</span>
+        </a>
+        <a href="/categories/games.html" class="cat-card">
+          <div class="cat-emoji">🎮</div>
+          <h3>Games</h3>
+          <p>Pure, focused gameplay. No in-app purchases, no energy timers, no pay-to-win. Just fun.</p>
+          <span class="cat-arrow">View apps →</span>
+        </a>
+        <a href="/privacy/index.html" class="cat-card privacy-card">
+          <div class="cat-emoji">🔒</div>
+          <h3>Data Privacy</h3>
+          <p>One page, every app. See exactly what each app does and doesn't collect.</p>
+          <span class="cat-arrow">View policy →</span>
+        </a>
       </div>
     </div>
   </section>
