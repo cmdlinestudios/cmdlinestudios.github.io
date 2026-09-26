@@ -25,12 +25,12 @@
       z-index: 200;
       display: flex;
       gap: 2px;
-      background: rgba(17, 24, 40, 0.88);
+      background: #141C33;
       backdrop-filter: blur(14px);
-      border: 1px solid #1E2A48;
+      border: 1px solid #35487A;
       border-radius: 30px;
       padding: 6px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      box-shadow: 0 12px 34px rgba(0,0,0,0.65);
       max-width: 94vw;
       overflow-x: auto;
       scrollbar-width: none;
@@ -39,7 +39,7 @@
     .float-nav a {
       font-family: 'JetBrains Mono', monospace;
       font-size: 12px;
-      color: #8B9CC0;
+      color: #A9B8DC;
       text-decoration: none;
       padding: 9px 15px;
       border-radius: 20px;
@@ -47,6 +47,7 @@
       white-space: nowrap;
     }
     .float-nav a:hover { color: #00D4FF; background: #161D30; }
+    .float-nav a.active { color: #0A0E1A; background: #00D4FF; }
     .float-nav a.privacy-link { color: #FFB347; }
     .float-nav a.privacy-link:hover { background: #221B0C; }
     .float-nav a.contact-link { color: #F0F4FF; border-left: 1px solid #1E2A48; margin-left: 4px; padding-left: 15px; }
@@ -86,7 +87,7 @@
     @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
     .hero-sub {
       font-size: clamp(16px, 2vw, 19px);
-      color: #8B9CC0;
+      color: #A9B8DC;
       max-width: 600px;
       margin: 0 auto 36px;
       font-weight: 400;
@@ -122,7 +123,7 @@
       padding: 20px 28px;
       font-family: 'JetBrains Mono', monospace;
       font-size: 13px;
-      color: #8B9CC0;
+      color: #A9B8DC;
       text-align: left;
       width: 340px;
       max-width: 100%;
@@ -198,7 +199,7 @@
       color: #F0F4FF;
       margin-bottom: 8px;
     }
-    .phil-card p { font-size: 14px; color: #8B9CC0; line-height: 1.6; }
+    .phil-card p { font-size: 14px; color: #A9B8DC; line-height: 1.6; }
 
     /* CATEGORIES (now clickable) */
     .apps-section { background: #0A0E1A; }
@@ -231,7 +232,7 @@
       color: #F0F4FF;
       margin-bottom: 8px;
     }
-    .cat-card p { font-size: 14px; color: #8B9CC0; line-height: 1.6; margin-bottom: 14px; }
+    .cat-card p { font-size: 14px; color: #A9B8DC; line-height: 1.6; margin-bottom: 14px; }
     .cat-arrow {
       font-family: 'JetBrains Mono', monospace;
       font-size: 12px;
@@ -280,7 +281,7 @@
       color: #F0F4FF;
       margin-bottom: 6px;
     }
-    .promise-item p { font-size: 13px; color: #8B9CC0; line-height: 1.6; }
+    .promise-item p { font-size: 13px; color: #A9B8DC; line-height: 1.6; }
 
     /* FOOTER */
     .footer {
@@ -295,7 +296,7 @@
       color: #00D4FF;
       margin-bottom: 10px;
     }
-    .footer-tagline { font-size: 13px; color: #4A5880; margin-bottom: 28px; }
+    .footer-tagline { font-size: 13px; color: #6B80AC; margin-bottom: 28px; }
     .contact-block {
       border-top: 1px solid #1E2540;
       padding-top: 28px;
@@ -340,6 +341,7 @@
 
   <!-- FLOATING NAV -->
   <nav class="float-nav">
+    <a href="/index.html" class="active">Home</a>
     <a href="/categories/fitness.html">Fitness</a>
     <a href="/categories/productivity.html">Productivity</a>
     <a href="/categories/education.html">Education</a>
@@ -379,7 +381,7 @@
     <div class="section">
       <div class="section-label">Our philosophy</div>
       <h2>We got tired of the same thing you did.</h2>
-      <p style="color:#8B9CC0;max-width:620px;">Free apps that lock you out. Subscriptions for things that should cost $3. Features you'll never use cluttering the screen. We're building something different.</p>
+      <p style="color:#A9B8DC;max-width:620px;">Free apps that lock you out. Subscriptions for things that should cost $3. Features you'll never use cluttering the screen. We're building something different.</p>
       <div class="phil-grid">
         <div class="phil-card c1"><div class="phil-icon">🚫</div><h3>Zero ads</h3><p>No banners, no pop-ups, no "watch a video to continue." Not now, not after we grow.</p></div>
         <div class="phil-card c2"><div class="phil-icon">💸</div><h3>Pay once, own it</h3><p>Every app is a one-time purchase. No recurring charges, no premium tiers, no gotchas.</p></div>
@@ -394,7 +396,7 @@
     <div class="section">
       <div class="section-label">What we're working on</div>
       <h2>Apps for real life.</h2>
-      <p style="color:#8B9CC0;max-width:580px;">Tap into a category to see what's built, what's in progress, and what's coming next.</p>
+      <p style="color:#A9B8DC;max-width:580px;">Tap into a category to see what's built, what's in progress, and what's coming next.</p>
       <div class="cat-grid">
         <a href="/categories/fitness.html" class="cat-card">
           <div class="cat-emoji">💪</div>
