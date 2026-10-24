@@ -130,7 +130,7 @@
       margin-bottom: 8px;
     }
     .app-status.live { color: #4DD9AC; background: #0B2A22; border-color: #1C5A48; }
-    .app-links { margin-top: 18px; display: flex; gap: 10px; flex-wrap: wrap; }
+    .app-links { margin-top: 18px; display: flex; gap: 16px; flex-wrap: wrap; align-items: center; }
     .app-link-btn {
       display: inline-flex;
       align-items: center;
@@ -146,8 +146,9 @@
       transition: border-color 0.2s, color 0.2s;
     }
     .app-link-btn:hover { border-color: #FFB347; color: #FFB347; }
-    .app-link-btn.app-store-btn { color: #0A0E1A; background: #00D4FF; border-color: #00D4FF; font-weight: 600; }
-    .app-link-btn.app-store-btn:hover { color: #0A0E1A; background: #4DE3FF; border-color: #4DE3FF; }
+    .app-store-badge { display: inline-flex; line-height: 0; transition: opacity 0.2s, transform 0.2s; }
+    .app-store-badge:hover { opacity: 0.85; transform: translateY(-1px); }
+    .app-store-badge img { display: block; height: 40px; width: auto; }
 
     /* SCREENSHOT GALLERY */
     .gallery { margin-top: 32px; padding-top: 28px; border-top: 1px solid #1E2540; }
@@ -270,7 +271,7 @@
         <span class="app-audience">✓ Built for physics students &amp; professors — accuracy-first, hand-verified physics</span>
         <span class="app-audience">✓ Runs on iPhone, iPad, and Mac (Apple silicon)</span>
         <div class="app-links">
-          <a href="https://apps.apple.com/us/app/id6819044247" class="app-link-btn app-store-btn" target="_blank" rel="noopener">Get it on the App Store</a>
+          <a href="https://apps.apple.com/us/app/id6819044247" class="app-store-badge" target="_blank" rel="noopener"><img src="/assets/badges/app-store-badge-black.svg" alt="Download on the App Store" width="120" height="40"></a>
           <a href="/privacy/index.html#launchpad" class="app-link-btn">🔒 View privacy policy</a>
         </div>
       </div>
