@@ -4,6 +4,20 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Fitness — Command Line Studios</title>
+  <meta name="description" content="reps_: Your Digital Logbook. A simple, offline workout logbook for iPhone. Plan your week, log every set, and see your progress. No accounts, no ads, no subscriptions, no data collection." />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Command Line Studios" />
+  <meta property="og:title" content="reps_: Your Digital Logbook" />
+  <meta property="og:description" content="A simple, offline workout logbook for iPhone. Plan your week, log every set, and see your progress. No accounts, no ads, no subscriptions, no data collection." />
+  <meta property="og:url" content="https://cmdlinestudios.com/categories/fitness.html" />
+  <meta property="og:image" content="https://cmdlinestudios.com/assets/reps/reps-teaser-1200x630.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="reps_: Your Digital Logbook, in beta testing, coming soon to the App Store" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="reps_: Your Digital Logbook" />
+  <meta name="twitter:description" content="A simple, offline workout logbook for iPhone. Plan your week, log every set, and see your progress. No accounts, no ads, no subscriptions, no data collection." />
+  <meta name="twitter:image" content="https://cmdlinestudios.com/assets/reps/reps-teaser-1200x630.png" />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -47,6 +61,15 @@
     .coming-soon h3 { font-family: 'Space Grotesk', sans-serif; color: #A9B8DC; font-size: 18px; margin-bottom: 6px; }
     .coming-soon p { font-family: 'JetBrains Mono', monospace; font-size: 13px; }
 
+    .teaser-card {
+      display: flex; align-items: center; gap: 28px;
+      background: #111828; border: 1px solid #1E2540; border-radius: 16px; padding: 36px;
+    }
+    .teaser-icon { flex: 0 0 auto; width: 112px; height: 112px; display: block; }
+    .teaser-info h2 { font-family: 'Space Grotesk', sans-serif; font-size: 24px; font-weight: 700; color: #F0F4FF; margin-bottom: 10px; }
+    .teaser-info p.blurb { color: #A9B8DC; font-size: 15px; line-height: 1.7; margin-bottom: 14px; }
+    .teaser-info .teaser-status { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #6B80AC; }
+
     .footer { background: #060910; border-top: 1px solid #1E2540; padding: 48px 40px; text-align: center; }
     .footer-logo { font-family: 'JetBrains Mono', monospace; font-size: 15px; color: #00D4FF; margin-bottom: 10px; }
     .footer-tagline { font-size: 13px; color: #6B80AC; margin-bottom: 28px; }
@@ -60,6 +83,8 @@
       .page-hero { padding: 96px 24px 36px; }
       .section { padding: 40px 24px; }
       .float-nav a { padding: 8px 11px; font-size: 11px; }
+      .teaser-card { flex-direction: column; align-items: flex-start; gap: 20px; padding: 24px; }
+      .teaser-icon { width: 96px; height: 96px; }
     }
   </style>
 </head>
@@ -83,10 +108,13 @@
   </header>
 
   <section class="section">
-    <div class="coming-soon">
-      <div class="emoji">🚧</div>
-      <h3>Coming soon, stay tuned!</h3>
-      <p>// fitness app currently in development</p>
+    <div class="teaser-card">
+      <img class="teaser-icon" src="/assets/reps/reps-icon.png" alt="reps_ app icon" width="112" height="112">
+      <div class="teaser-info">
+        <h2>reps_: Your Digital Logbook</h2>
+        <p class="blurb">A simple, offline workout logbook for iPhone. Plan your week, log every set, and see your progress. No accounts, no ads, no subscriptions, no data collection.</p>
+        <p class="teaser-status">// in beta testing · coming soon to the App Store</p>
+      </div>
     </div>
   </section>
 
