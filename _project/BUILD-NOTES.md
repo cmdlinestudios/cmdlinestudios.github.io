@@ -184,3 +184,18 @@ Links changed from root-absolute (`/categories/...`) to **relative** (`categorie
 - `scripts/check_privacy.py`: verifies the privacy text. Update its list when a policy changes on
   purpose.
 - `scripts/check_content.py`: compares the text of two copies of the site, old and new.
+
+---
+
+## Update, Nov 21, 2026: showcase stack fix (after go-live in `802bc02`)
+
+- **Problem:** the floating fact labels were covered by the 3D iPhone shots (and clipped at the
+  stage edge at some widths); the iPad shot was almost entirely hidden; labels were hidden below 1020px.
+- **Fix (layout only, no text or image changes):** fanned stack with the iPad at the back-left;
+  labels moved into a `.stage-tags` layer above the stack; below 1020px the labels show as a row of
+  pills under the stack; an iPhone-only stack (no `s-back`) centers itself.
+- **Shelf tested** with a throwaway second app (not shipped): tile switching, `#app` direct links
+  (fresh load and in-page), gallery and lightbox all work. Added a `hashchange` listener in
+  `site.js` so in-page `#app` links switch the showcase.
+- Files changed: `assets/css/site.css`, `assets/js/site.js`, `categories/education.html`,
+  `README.md`, `_project/BUILD-NOTES.md`.

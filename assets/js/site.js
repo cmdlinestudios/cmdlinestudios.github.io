@@ -27,6 +27,8 @@
     // Deep link: categories/education.html#launchpad opens that app
     var start = (location.hash || '').slice(1);
     if (!selectApp(start, false)) selectApp(shows[0].getAttribute('data-app'), false);
+    // Links that change #app while already on the page switch the showcase too
+    window.addEventListener('hashchange', function () { selectApp((location.hash || '').slice(1), false); });
   }
 
   /* 2. Gallery reel: duplicate the screenshots so the loop never shows a gap */

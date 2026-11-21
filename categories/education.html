@@ -73,17 +73,22 @@
     <div class="showcase" data-app="launchpad">
 
       <section class="show-main" id="launchpad" aria-label="Launchpad: Planetary Simulator">
-        <!-- 3D stack: iPad shot behind, two iPhone shots in front -->
+        <!-- 3D stack: iPad shot at the back-left, two iPhone shots fanned in front -->
+        <div class="stage-wrap">
         <div class="stage">
           <div class="stage-inner">
             <div class="stage-glow" aria-hidden="true"></div>
             <div class="shot s-back"><img src="../assets/screenshots/launchpad-ipad-1.webp" alt="Launchpad on iPad: Two worlds. One launch"></div>
             <div class="shot s-left"><img src="../assets/screenshots/launchpad-iphone-2.webp" alt="Launchpad on iPhone: Set up any launch"></div>
             <div class="shot s-right"><img src="../assets/screenshots/launchpad-iphone-1.webp" alt="Launchpad on iPhone: Two worlds. One launch"></div>
-            <div class="float-tag glass" style="left:0;top:10%;">10 solar system bodies</div>
-            <div class="float-tag glass" style="left:4%;bottom:14%;animation-delay:-3s;">Mercury → Pluto</div>
-            <div class="float-tag glass" style="right:0;top:4%;animation-delay:-5s;">Hand-verified physics</div>
           </div>
+        </div>
+        <!-- Short facts: float in the stage's corners on wide screens, a row of pills under the stack below 1020px -->
+        <div class="stage-tags">
+          <div class="float-tag glass" style="left:0;top:6%;">10 solar system bodies</div>
+          <div class="float-tag glass" style="left:2%;bottom:6%;animation-delay:-3s;">Mercury → Pluto</div>
+          <div class="float-tag glass" style="right:0;top:3%;animation-delay:-5s;">Hand-verified physics</div>
+        </div>
         </div>
 
         <!-- Details card -->

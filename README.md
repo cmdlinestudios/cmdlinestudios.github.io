@@ -139,8 +139,13 @@ Use `categories/education.html` as the template. A showcase is the two blocks ma
 `<!-- ============ SHOWCASE: ... -->`, both with the same `data-app="APP-ID"`:
 
 1. **Main block** (inside `<main>`): 3D stack + details card + gallery header.
-   - **3D stack**: `s-back` = an iPad screenshot, `s-left` and `s-right` = two iPhone screenshots.
-     No iPad shots? Delete the `s-back` line. The three `float-tag` chips are optional short facts.
+   - **3D stack**: `s-back` = an iPad screenshot (sits at the back-left, mostly visible),
+     `s-left` and `s-right` = two iPhone screenshots fanned to its right. No iPad shots? Delete the
+     `s-back` line and the two iPhones center themselves automatically.
+   - **Fact labels**: the `float-tag` chips inside `<div class="stage-tags">` are optional short
+     facts (keep them to 3, a few words each). On wide screens they float in the stage's corners,
+     always on top of the screenshots; set each one's corner with its inline `left/right/top/bottom`.
+     Below 1020px they automatically become a centered row of pills under the stack.
    - **Details card**: "Now available on the App Store" tag, name, price
      (`<b>$X.XX</b> <span>· one-time purchase</span>`), description, ✓ points (`<li>` items; the
      check mark is added automatically), App Store badge link

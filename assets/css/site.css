@@ -340,7 +340,8 @@ button { font: inherit; color: inherit; }
 /* Showcase (stage 3 of the app lifecycle) */
 .showcase[hidden] { display: none; }
 .show-main { display: flex; flex-wrap: wrap; align-items: center; gap: 24px; padding: 32px 0 80px; scroll-margin-top: 20px; }
-.stage { position: relative; flex: 1 1 600px; min-width: 0; height: 600px; perspective: 1800px; z-index: 1; overflow: hidden; }
+.stage-wrap { position: relative; flex: 1 1 600px; min-width: 0; z-index: 1; }
+.stage { position: relative; height: 600px; perspective: 1800px; overflow: hidden; }
 .stage-inner { position: absolute; inset: 0; transform-style: preserve-3d; }
 .stage-glow { position: absolute; left: 50%; bottom: 40px; width: 64%; height: 70px; transform: translateX(-50%); border-radius: 50%; background: var(--accent); filter: blur(50px); opacity: .45; }
 .shot {
@@ -348,12 +349,20 @@ button { font: inherit; color: inherit; }
   box-shadow: var(--shot-shadow); transition: transform .9s var(--ease); will-change: transform;
 }
 .shot img { display: block; width: 100%; height: 100%; object-fit: cover; }
-.s-back  { width: 340px; height: 453px; transform: translate(-50%, -68%) translateZ(-200px) rotateX(6deg); opacity: .95; }
-.s-left  { width: 214px; height: 465px; transform: translate(-102%, -46%) rotateY(20deg) rotateZ(-6deg) translateZ(30px); }
-.s-right { width: 214px; height: 465px; transform: translate(2%, -50%) rotateY(-20deg) rotateZ(6deg) translateZ(70px); }
-.stage:hover .s-back  { transform: translate(-50%, -72%) translateZ(-240px) rotateX(0deg); }
-.stage:hover .s-left  { transform: translate(-112%, -48%) rotateY(8deg) rotateZ(-3deg) translateZ(60px); }
-.stage:hover .s-right { transform: translate(12%, -48%) rotateY(-8deg) rotateZ(3deg) translateZ(90px); }
+/* Fanned stack: iPad at the back-left (most of it visible), two iPhones fanned to its right */
+.s-back  { width: 300px; height: 400px; transform: translate(-302px, -232px) translateZ(-40px) rotateY(12deg) rotateZ(-3deg); }
+.s-left  { width: 180px; height: 391px; transform: translate(-22px, -176px) rotateY(-8deg) rotateZ(2deg) translateZ(30px); }
+.s-right { width: 180px; height: 391px; transform: translate(128px, -214px) rotateY(-16deg) rotateZ(6deg) translateZ(60px); }
+.stage:hover .s-back  { transform: translate(-306px, -238px) translateZ(-20px) rotateY(4deg) rotateZ(-2deg); }
+.stage:hover .s-left  { transform: translate(-28px, -184px) rotateY(-3deg) rotateZ(1deg) translateZ(50px); }
+.stage:hover .s-right { transform: translate(144px, -220px) rotateY(-6deg) rotateZ(3deg) translateZ(80px); }
+/* No iPad shot (iPhone-only app): center the two iPhones */
+.stage-inner:not(:has(.s-back)) .s-left  { width: 214px; height: 465px; transform: translate(-206px, -222px) rotateY(12deg) rotateZ(-4deg) translateZ(30px); }
+.stage-inner:not(:has(.s-back)) .s-right { width: 214px; height: 465px; transform: translate(-6px, -240px) rotateY(-12deg) rotateZ(4deg) translateZ(60px); }
+.stage:hover .stage-inner:not(:has(.s-back)) .s-left  { transform: translate(-222px, -226px) rotateY(5deg) rotateZ(-2deg) translateZ(50px); }
+.stage:hover .stage-inner:not(:has(.s-back)) .s-right { transform: translate(10px, -242px) rotateY(-5deg) rotateZ(2deg) translateZ(80px); }
+/* The fact labels sit above the stack, never behind it */
+.stage-tags { position: absolute; inset: 0; z-index: 2; pointer-events: none; }
 .float-tag {
   position: absolute; padding: 10px 14px; border-radius: 14px; font-size: 13px; font-weight: 600; white-space: nowrap;
   animation: bob 7s ease-in-out infinite alternate;
@@ -453,10 +462,15 @@ button { font: inherit; color: inherit; }
 .lb-count { position: absolute; bottom: 18px; left: 50%; transform: translateX(-50%); font-family: var(--mono); font-size: 12px; color: #A1A1A6; }
 
 /* 8. RESPONSIVE + REDUCED MOTION ------------------------------------------- */
+@media (min-width: 1021px) and (max-width: 1200px) {
+  .stage-inner { transform: scale(.92); }
+}
 @media (max-width: 1020px) {
-  .stage { height: 500px; }
+  .stage { height: 470px; }
   .stage-inner { transform: scale(.8); }
-  .float-tag { display: none; }
+  /* Below 1020px the labels become a row of pills under the stack */
+  .stage-tags { position: static; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 4px; }
+  .float-tag { position: static; animation: none; font-size: 12px; padding: 8px 12px; }
 }
 @media (max-width: 860px) {
   .promise-grid, .bento, .price-grid, .explore-grid { grid-template-columns: minmax(0, 1fr); }
@@ -476,8 +490,9 @@ button { font: inherit; color: inherit; }
   .promise, .tile, .price-card, .details { padding: 26px; }
   .tile .art { top: 22px; right: 22px; max-width: 52%; }
   .tile.span2 .tile-name, .tile-name { font-size: 40px; }
-  .stage { height: 380px; flex-basis: 100%; }
-  .stage-inner { transform: scale(.6); }
+  .stage-wrap { flex-basis: 100%; }
+  .stage { height: 290px; }
+  .stage-inner { transform: scale(.54); }
   .reel { height: 380px; }
   .plane { top: 40px; }
   .track.iphone .frame { width: 140px; height: 304px; }
