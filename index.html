@@ -4,459 +4,251 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Command Line Studios, LLC</title>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
-  <style>
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      background: #0A0E1A;
-      color: #F0F4FF;
-      font-family: 'Inter', sans-serif;
-      font-size: 16px;
-      line-height: 1.6;
-    }
-
-    /* FLOATING NAV */
-    .float-nav {
-      position: fixed;
-      top: 18px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 200;
-      display: flex;
-      gap: 2px;
-      background: #141C33;
-      backdrop-filter: blur(14px);
-      border: 1px solid #35487A;
-      border-radius: 30px;
-      padding: 6px;
-      box-shadow: 0 12px 34px rgba(0,0,0,0.65);
-      max-width: 94vw;
-      overflow-x: auto;
-      scrollbar-width: none;
-    }
-    .float-nav::-webkit-scrollbar { display: none; }
-    .float-nav a {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 12px;
-      color: #A9B8DC;
-      text-decoration: none;
-      padding: 9px 15px;
-      border-radius: 20px;
-      transition: color 0.2s, background 0.2s;
-      white-space: nowrap;
-    }
-    .float-nav a:hover { color: #00D4FF; background: #161D30; }
-    .float-nav a.active { color: #0A0E1A; background: #00D4FF; }
-    .float-nav a.privacy-link { color: #FFB347; }
-    .float-nav a.privacy-link:hover { background: #221B0C; }
-    .float-nav a.contact-link { color: #F0F4FF; border-left: 1px solid #1E2A48; margin-left: 4px; padding-left: 15px; }
-
-    /* HERO */
-    .hero {
-      background: #0A0E1A;
-      padding: 116px 40px 60px;
-      text-align: center;
-      border-bottom: 1px solid #1E2540;
-    }
-    .logo-line {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 13px;
-      color: #00D4FF;
-      letter-spacing: 0.12em;
-      margin-bottom: 24px;
-      opacity: 0.85;
-    }
-    .hero h1 {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: clamp(36px, 6vw, 64px);
-      font-weight: 700;
-      line-height: 1.1;
-      color: #F0F4FF;
-      margin-bottom: 20px;
-    }
-    .cursor {
-      display: inline-block;
-      width: 4px;
-      height: 0.85em;
-      background: #00D4FF;
-      vertical-align: middle;
-      margin-left: 4px;
-      animation: blink 1s step-end infinite;
-    }
-    @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
-    .hero-sub {
-      font-size: clamp(16px, 2vw, 19px);
-      color: #A9B8DC;
-      max-width: 600px;
-      margin: 0 auto 36px;
-      font-weight: 400;
-    }
-    .badge-row {
-      display: flex;
-      gap: 12px;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-bottom: 48px;
-    }
-    .badge {
-      background: #111828;
-      border: 1px solid #1E2A48;
-      border-radius: 20px;
-      padding: 7px 16px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 12px;
-      color: #00D4FF;
-      letter-spacing: 0.05em;
-    }
-    .badge.amber { color: #FFB347; border-color: #2A2210; }
-    .badge.white { color: #F0F4FF; border-color: #2A3050; }
-    .hero-visual {
-      margin: 0 auto 32px;
-      display: flex;
-      justify-content: center;
-    }
-    .terminal-box {
-      background: #060C18;
-      border: 1px solid #1E2540;
-      border-radius: 10px;
-      padding: 20px 28px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 13px;
-      color: #A9B8DC;
-      text-align: left;
-      width: 340px;
-      max-width: 100%;
-    }
-    .t-bar { display: flex; gap: 7px; margin-bottom: 16px; }
-    .dot { width: 10px; height: 10px; border-radius: 50%; }
-    .d-r { background: #FF5F56; }
-    .d-y { background: #FFBD2E; }
-    .d-g { background: #27C93F; }
-    .t-line { margin-bottom: 5px; line-height: 1.7; }
-    .t-green { color: #4DD9AC; }
-    .t-white { color: #F0F4FF; }
-    .t-dim { color: #3A4A70; }
-
-    /* SECTIONS */
-    .section {
-      padding: 64px 40px;
-      max-width: 1000px;
-      margin: 0 auto;
-    }
-    .section-label {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
-      letter-spacing: 0.15em;
-      color: #00D4FF;
-      text-transform: uppercase;
-      margin-bottom: 12px;
-    }
-    .section h2 {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: clamp(26px, 4vw, 38px);
-      font-weight: 700;
-      color: #F0F4FF;
-      margin-bottom: 16px;
-      line-height: 1.2;
-    }
-
-    /* PHILOSOPHY */
-    .philosophy {
-      background: #0D1220;
-      border-top: 1px solid #1E2540;
-      border-bottom: 1px solid #1E2540;
-    }
-    .phil-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 24px;
-      margin-top: 40px;
-    }
-    .phil-card {
-      background: #111828;
-      border: 1px solid #1E2540;
-      border-radius: 12px;
-      padding: 24px;
-      position: relative;
-      overflow: hidden;
-    }
-    .phil-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 2px;
-    }
-    .phil-card.c1::before { background: #00D4FF; }
-    .phil-card.c2::before { background: #FFB347; }
-    .phil-card.c3::before { background: #7B8EFF; }
-    .phil-card.c4::before { background: #4DD9AC; }
-    .phil-icon { font-size: 22px; margin-bottom: 12px; }
-    .phil-card h3 {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 16px;
-      font-weight: 600;
-      color: #F0F4FF;
-      margin-bottom: 8px;
-    }
-    .phil-card p { font-size: 14px; color: #A9B8DC; line-height: 1.6; }
-
-    /* CATEGORIES (now clickable) */
-    .apps-section { background: #0A0E1A; }
-    .cat-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 20px;
-      margin-top: 40px;
-    }
-    .cat-card {
-      background: #111828;
-      border: 1px solid #1E2540;
-      border-radius: 12px;
-      padding: 28px 24px;
-      text-decoration: none;
-      display: block;
-      transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
-    }
-    .cat-card:hover {
-      transform: translateY(-4px);
-      border-color: #00D4FF;
-      background: #131B2E;
-    }
-    .cat-card.privacy-card:hover { border-color: #FFB347; }
-    .cat-emoji { font-size: 28px; margin-bottom: 14px; }
-    .cat-card h3 {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 18px;
-      font-weight: 600;
-      color: #F0F4FF;
-      margin-bottom: 8px;
-    }
-    .cat-card p { font-size: 14px; color: #A9B8DC; line-height: 1.6; margin-bottom: 14px; }
-    .cat-arrow {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 12px;
-      color: #00D4FF;
-      opacity: 0;
-      transform: translateX(-4px);
-      transition: opacity 0.2s ease, transform 0.2s ease;
-    }
-    .cat-card.privacy-card .cat-arrow { color: #FFB347; }
-    .cat-card:hover .cat-arrow { opacity: 1; transform: translateX(0); }
-
-    /* PRICING PROMISE */
-    .price-section {
-      background: #0D1220;
-      border-top: 1px solid #1E2540;
-      border-bottom: 1px solid #1E2540;
-    }
-    .price-promise {
-      background: #111828;
-      border: 1px solid #1E2540;
-      border-radius: 16px;
-      padding: 40px;
-      display: flex;
-      gap: 40px;
-      align-items: flex-start;
-      flex-wrap: wrap;
-      margin-top: 40px;
-    }
-    .promise-item { flex: 1; min-width: 160px; }
-    .promise-icon {
-      width: 40px; height: 40px;
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 18px;
-      margin-bottom: 12px;
-    }
-    .pi-cyan { background: #0A1F2E; }
-    .pi-amber { background: #2A1C05; }
-    .pi-green { background: #0A1F18; }
-    .promise-item h3 {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 15px;
-      font-weight: 600;
-      color: #F0F4FF;
-      margin-bottom: 6px;
-    }
-    .promise-item p { font-size: 13px; color: #A9B8DC; line-height: 1.6; }
-
-    /* FOOTER */
-    .footer {
-      background: #060910;
-      border-top: 1px solid #1E2540;
-      padding: 48px 40px;
-      text-align: center;
-    }
-    .footer-logo {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 15px;
-      color: #00D4FF;
-      margin-bottom: 10px;
-    }
-    .footer-tagline { font-size: 13px; color: #6B80AC; margin-bottom: 28px; }
-    .contact-block {
-      border-top: 1px solid #1E2540;
-      padding-top: 28px;
-      margin-top: 4px;
-    }
-    .contact-label {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
-      letter-spacing: 0.15em;
-      color: #00D4FF;
-      text-transform: uppercase;
-      margin-bottom: 10px;
-    }
-    .contact-email {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 14px;
-      color: #F0F4FF;
-      text-decoration: none;
-      background: #111828;
-      border: 1px solid #1E2540;
-      border-radius: 8px;
-      padding: 10px 20px;
-      transition: border-color 0.2s, color 0.2s;
-    }
-    .contact-email:hover { border-color: #00D4FF; color: #00D4FF; }
-    .footer-copy { font-size: 12px; color: #2A3050; margin-top: 28px; }
-
-    /* RESPONSIVE */
-    @media (max-width: 600px) {
-      .hero { padding: 96px 24px 40px; }
-      .section { padding: 48px 24px; }
-      .price-promise { padding: 24px; gap: 24px; }
-      .footer { padding: 32px 24px; }
-      .float-nav a { padding: 8px 11px; font-size: 11px; }
-    }
-  </style>
+  <meta name="theme-color" content="#F4F4F2" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#0B0B0D" media="(prefers-color-scheme: dark)" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/site.css">
 </head>
 <body>
+<div class="page">
 
-  <!-- FLOATING NAV -->
-  <nav class="float-nav">
-    <a href="/index.html" class="active">Home</a>
-    <a href="/categories/fitness.html">Fitness</a>
-    <a href="/categories/productivity.html">Productivity</a>
-    <a href="/categories/education.html">Education</a>
-    <a href="/categories/games.html">Games</a>
-    <a href="/privacy/index.html" class="privacy-link">Privacy</a>
-    <a href="mailto:support@cmdlinestudios.com" class="contact-link">Contact</a>
-  </nav>
+  <!-- Background: soft orange orbs + slow rotating shapes -->
+  <div class="orbs" aria-hidden="true">
+    <div class="orb" style="width:520px;height:520px;right:4%;top:60px;opacity:.6;"></div>
+    <div class="shape" style="width:460px;height:460px;right:8%;top:120px;border-radius:120px;"></div>
+    <div class="shape" style="width:300px;height:300px;right:22%;top:260px;border-radius:50%;animation-duration:90s;animation-direction:reverse;"></div>
+    <div class="orb" style="width:440px;height:440px;left:-140px;top:1650px;opacity:.45;animation-delay:-4s;"></div>
+  </div>
 
-  <!-- HERO -->
-  <header class="hero">
-    <div class="logo-line">$ command-line-studios --init</div>
-    <div class="hero-visual">
-      <div class="terminal-box">
-        <div class="t-bar">
-          <div class="dot d-r"></div>
-          <div class="dot d-y"></div>
-          <div class="dot d-g"></div>
-        </div>
-        <div class="t-line"><span class="t-green">✓</span> <span class="t-white">No ads</span> <span class="t-dim">// ever</span></div>
-        <div class="t-line"><span class="t-green">✓</span> <span class="t-white">No subscriptions</span> <span class="t-dim">// ever</span></div>
-        <div class="t-line"><span class="t-green">✓</span> <span class="t-white">No bloat</span> <span class="t-dim">// just what you need</span></div>
-        <div class="t-line"><span class="t-green">✓</span> <span class="t-white">Pay once</span> <span class="t-dim">// own it forever</span></div>
-        <div class="t-line t-dim">_</div>
-      </div>
-    </div>
-    <h1>Apps that respect<br>your wallet<span class="cursor"></span></h1>
-    <p class="hero-sub">Simple, focused iOS apps with no ads, no subscriptions, and no unnecessary features. Just tools that work — for a fair, one-time price.</p>
-    <div class="badge-row">
-      <span class="badge">iOS</span>
-      <span class="badge white">One-time purchase</span>
-      <span class="badge amber">No ads. Ever.</span>
-    </div>
+  <!-- NAV -->
+  <header class="site-header">
+    <nav class="site-nav glass" aria-label="Main">
+      <a class="logo" href="index.html" aria-label="Command Line Studios home"><span class="logo-mark" aria-hidden="true">&gt;_</span>Command Line Studios</a>
+      <a class="navlink" href="categories/fitness.html">Fitness</a>
+      <a class="navlink" href="categories/productivity.html">Productivity</a>
+      <a class="navlink" href="categories/education.html">Education</a>
+      <a class="navlink" href="categories/games.html">Games</a>
+      <a class="navlink" href="privacy/index.html">Privacy</a>
+      <a class="nav-contact" href="mailto:support@cmdlinestudios.com">Contact</a>
+    </nav>
   </header>
 
-  <!-- PHILOSOPHY -->
-  <section class="philosophy">
-    <div class="section">
-      <div class="section-label">Our philosophy</div>
-      <h2>We got tired of the same thing you did.</h2>
-      <p style="color:#A9B8DC;max-width:620px;">Free apps that lock you out. Subscriptions for things that should cost $3. Features you'll never use cluttering the screen. We're building something different.</p>
-      <div class="phil-grid">
-        <div class="phil-card c1"><div class="phil-icon">🚫</div><h3>Zero ads</h3><p>No banners, no pop-ups, no "watch a video to continue." Not now, not after we grow.</p></div>
-        <div class="phil-card c2"><div class="phil-icon">💸</div><h3>Pay once, own it</h3><p>Every app is a one-time purchase. No recurring charges, no premium tiers, no gotchas.</p></div>
-        <div class="phil-card c3"><div class="phil-icon">🎯</div><h3>Focused by design</h3><p>We build what you need and leave out everything you don't. Less noise, more clarity.</p></div>
-        <div class="phil-card c4"><div class="phil-icon">🔒</div><h3>Your data stays yours</h3><p>We don't collect data for revenue. Only the minimum an app actually needs to function.</p></div>
-      </div>
-    </div>
-  </section>
+  <main class="wrap">
 
-  <!-- APP CATEGORIES -->
-  <section class="apps-section">
-    <div class="section">
-      <div class="section-label">What we're working on</div>
-      <h2>Apps for real life.</h2>
-      <p style="color:#A9B8DC;max-width:580px;">Tap into a category to see what's built, what's in progress, and what's coming next.</p>
-      <div class="cat-grid">
-        <a href="/categories/fitness.html" class="cat-card">
-          <div class="cat-emoji">💪</div>
-          <h3>Fitness</h3>
-          <p>Tools to track your health and training — without the noise of features you'll never use.</p>
-          <span class="cat-arrow">View apps →</span>
-        </a>
-        <a href="/categories/productivity.html" class="cat-card">
-          <div class="cat-emoji">⏱</div>
-          <h3>Productivity</h3>
-          <p>Simple utilities that help you stay organized and on task, without the learning curve.</p>
-          <span class="cat-arrow">View apps →</span>
-        </a>
-        <a href="/categories/education.html" class="cat-card">
-          <div class="cat-emoji">🔭</div>
-          <h3>Education</h3>
-          <p>Interactive apps that make learning tangible — explore concepts by doing, not just reading.</p>
-          <span class="cat-arrow">View apps →</span>
-        </a>
-        <a href="/categories/games.html" class="cat-card">
-          <div class="cat-emoji">🎮</div>
-          <h3>Games</h3>
-          <p>Pure, focused gameplay. No in-app purchases, no energy timers, no pay-to-win. Just fun.</p>
-          <span class="cat-arrow">View apps →</span>
-        </a>
-        <a href="/privacy/index.html" class="cat-card privacy-card">
-          <div class="cat-emoji">🔒</div>
-          <h3>Data Privacy</h3>
-          <p>One page, every app. See exactly what each app does and doesn't collect.</p>
-          <span class="cat-arrow">View policy →</span>
-        </a>
+    <!-- HERO -->
+    <section class="hero">
+      <div class="label-muted">$ command-line-studios --init<span class="accent">_</span></div>
+      <h1>Apps that respect your <span class="accent">wallet.</span></h1>
+      <div class="hero-foot">
+        <div>
+          <p class="hero-sub">Simple, focused iOS apps with no ads, no subscriptions, and no unnecessary features. Just tools that work — for a fair, one-time price.</p>
+          <div class="hero-actions">
+            <a class="btn btn-solid" href="#categories">Explore the apps</a>
+            <a class="btn glass" href="#promise">Our promise</a>
+          </div>
+          <div class="chips">
+            <span class="chip-pill">iOS</span>
+            <span class="chip-pill">One-time purchase</span>
+            <span class="chip-pill hot">No ads. Ever.</span>
+          </div>
+        </div>
+        <div class="terminal glass">
+          <div class="terminal-bar" aria-hidden="true"><span></span><span></span><span></span></div>
+          <div><span class="ok">✓</span> No ads <span class="dim">// ever</span></div>
+          <div><span class="ok">✓</span> No subscriptions <span class="dim">// ever</span></div>
+          <div><span class="ok">✓</span> No bloat <span class="dim">// just what you need</span></div>
+          <div><span class="ok">✓</span> Pay once <span class="dim">// own it forever</span></div>
+          <div class="dim" aria-hidden="true">_</div>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- PRICING PROMISE -->
-  <section class="price-section">
-    <div class="section">
-      <div class="section-label">Our pricing promise</div>
-      <h2>What you see is what you pay.</h2>
-      <div class="price-promise">
-        <div class="promise-item"><div class="promise-icon pi-cyan">💳</div><h3>One-time price</h3><p>Every app has a flat purchase price. Buy it once, use it forever. No monthly surprises.</p></div>
-        <div class="promise-item"><div class="promise-icon pi-amber">📵</div><h3>Ad-free, guaranteed</h3><p>We don't run ads, sell attention, or partner with advertisers. Period.</p></div>
-        <div class="promise-item"><div class="promise-icon pi-green">🔒</div><h3>Privacy by default</h3><p>We don't harvest your data. If an app needs data to function, it stays on your device.</p></div>
+    <!-- PROMISE BENTO -->
+    <section class="promise-grid" aria-label="Our promises">
+      <div class="promise span2 glass lift">
+        <span class="label">01 // ads</span>
+        <div>
+          <h2 class="promise-title xl">No ads. Ever.</h2>
+          <p class="promise-body"><strong>Zero ads.</strong> No banners, no pop-ups, no "watch a video to continue." Not now, not after we grow.</p>
+        </div>
       </div>
-    </div>
-  </section>
+      <div class="promise hot lift">
+        <span class="label">02 // pricing</span>
+        <div>
+          <h2 class="promise-title">No subscriptions. Ever.</h2>
+          <p class="promise-body"><strong>Pay once, own it.</strong> Every app is a one-time purchase. No recurring charges, no premium tiers, no gotchas.</p>
+        </div>
+      </div>
+      <div class="promise glass lift">
+        <span class="label">03 // data</span>
+        <div>
+          <h2 class="promise-title">No data collection for revenue. Ever.</h2>
+          <p class="promise-body"><strong>Your data stays yours.</strong> We don't collect data for revenue. Only the minimum an app actually needs to function.</p>
+        </div>
+      </div>
+      <div class="promise promise-split span2 glass lift">
+        <div class="promise-main">
+          <span class="label">04 // focus</span>
+          <div>
+            <h2 class="promise-title">No bloat.</h2>
+            <p class="promise-body"><strong>Focused by design.</strong> We build what you need and leave out everything you don't. Less noise, more clarity.</p>
+          </div>
+        </div>
+        <div class="diff glass" aria-hidden="true">
+          <div><span class="accent">+</span> what you need</div>
+          <div class="gone">- feature you'll never use</div>
+          <div class="gone">- another upsell screen</div>
+          <div class="gone">- tracking sdk</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PHILOSOPHY -->
+    <section class="philosophy">
+      <div>
+        <div class="label">// our philosophy</div>
+        <h2 class="h-section">We got tired of the same thing you did.</h2>
+      </div>
+      <p>Free apps that lock you out. Subscriptions for things that should cost $3. Features you'll never use cluttering the screen. We're building something different.</p>
+    </section>
+
+    <!-- APP CATEGORIES -->
+    <section class="cats" id="categories">
+      <div class="section-head">
+        <div>
+          <div class="label">// what we're working on</div>
+          <h2 class="h-section">Apps for real life.</h2>
+        </div>
+        <p>Tap into a category to see what's built, what's in progress, and what's coming next.</p>
+      </div>
+
+      <div class="bento">
+
+        <a href="categories/fitness.html" class="tile span2 glass lift">
+          <svg class="art" width="300" height="120" viewBox="0 0 300 120" fill="none" aria-hidden="true">
+            <path d="M0 64 H96 L114 30 L134 104 L156 12 L176 88 L190 64 H300" stroke="var(--stroke)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+            <path class="trace" d="M0 64 H96 L114 30 L134 104 L156 12 L176 88 L190 64 H300" stroke="var(--accent)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span class="label">01 // fitness</span>
+          <div class="tile-foot">
+            <div>
+              <h3 class="tile-name">Fitness</h3>
+              <p class="tile-desc">Tools to track your health and training — without the noise of features you'll never use.</p>
+            </div>
+            <span class="tile-cta"><span class="cta-text">View apps</span><span class="go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"/></svg></span></span>
+          </div>
+        </a>
+
+        <a href="categories/productivity.html" class="tile glass lift">
+          <div class="tile-top">
+            <span class="label">02 // productivity</span>
+            <svg class="art-in" width="112" height="112" viewBox="0 0 140 140" fill="none" aria-hidden="true">
+              <circle cx="70" cy="70" r="50" stroke="var(--stroke)" stroke-width="10"/>
+              <g class="ring"><circle cx="70" cy="70" r="50" stroke="var(--accent)" stroke-width="10" stroke-linecap="round" stroke-dasharray="210 400" transform="rotate(-90 70 70)"/></g>
+              <path d="M52 70l12 12 24-26" stroke="currentColor" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="tile-stack">
+            <div>
+              <h3 class="tile-name">Productivity</h3>
+              <p class="tile-desc">Simple utilities that help you stay organized and on task, without the learning curve.</p>
+            </div>
+            <span class="tile-cta"><span class="cta-text">View apps</span><span class="go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"/></svg></span></span>
+          </div>
+        </a>
+
+        <a href="categories/education.html" class="tile hot lift">
+          <svg class="art" width="200" height="134" viewBox="0 0 240 160" fill="none" aria-hidden="true" style="top:16px;right:8px;">
+            <ellipse cx="120" cy="80" rx="104" ry="36" stroke="currentColor" stroke-opacity=".35" stroke-width="2" transform="rotate(-14 120 80)"/>
+            <ellipse cx="120" cy="80" rx="64" ry="22" stroke="currentColor" stroke-opacity=".25" stroke-width="2" transform="rotate(-14 120 80)"/>
+            <circle cx="120" cy="80" r="20" fill="currentColor"/>
+            <g class="orbit"><circle cx="216" cy="80" r="7" fill="currentColor"/></g>
+          </svg>
+          <span class="label">03 // education</span>
+          <div class="tile-stack">
+            <div>
+              <h3 class="tile-name">Education</h3>
+              <p class="tile-desc">Interactive apps that make learning tangible — explore concepts by doing, not just reading.</p>
+            </div>
+            <span class="tile-cta"><span class="cta-text">View apps</span><span class="go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"/></svg></span></span>
+          </div>
+        </a>
+
+        <a href="categories/games.html" class="tile span2 inverse lift">
+          <svg class="art" width="232" height="120" viewBox="0 0 232 120" fill="none" aria-hidden="true">
+            <rect x="0" y="0" width="52" height="52" rx="12" fill="currentColor" fill-opacity=".12"/>
+            <rect x="60" y="0" width="52" height="52" rx="12" fill="currentColor" fill-opacity=".12"/>
+            <rect class="blink" x="120" y="0" width="52" height="52" rx="12" fill="var(--accent)"/>
+            <rect x="180" y="0" width="52" height="52" rx="12" fill="currentColor" fill-opacity=".12"/>
+            <rect x="0" y="60" width="52" height="52" rx="12" fill="currentColor" fill-opacity=".12"/>
+            <rect x="60" y="60" width="52" height="52" rx="12" fill="var(--accent)"/>
+            <rect x="120" y="60" width="52" height="52" rx="12" fill="currentColor" fill-opacity=".12"/>
+            <rect x="180" y="60" width="52" height="52" rx="12" fill="currentColor" fill-opacity=".12"/>
+          </svg>
+          <span class="label">04 // games</span>
+          <div class="tile-foot">
+            <div>
+              <h3 class="tile-name">Games</h3>
+              <p class="tile-desc">Pure, focused gameplay. No in-app purchases, no energy timers, no pay-to-win. Just fun.</p>
+            </div>
+            <span class="tile-cta"><span class="cta-text">View apps</span><span class="go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"/></svg></span></span>
+          </div>
+        </a>
+
+        <a href="privacy/index.html" class="privacy-strip glass lift">
+          <span class="go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg></span>
+          <h3 class="privacy-strip-name">Data Privacy</h3>
+          <span class="privacy-strip-desc">One page, every app. See exactly what each app does and doesn't collect.</span>
+          <span class="privacy-strip-cta">View policy <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </a>
+
+      </div>
+    </section>
+
+    <!-- PRICING PROMISE -->
+    <section class="pricing" id="promise">
+      <div class="label">// our pricing promise</div>
+      <h2 class="h-section">What you see is what you pay.</h2>
+      <div class="price-grid">
+        <div class="price-card glass">
+          <div class="label">$ price --once</div>
+          <h3>One-time price</h3>
+          <p>Every app has a flat purchase price. Buy it once, use it forever. No monthly surprises.</p>
+        </div>
+        <div class="price-card glass">
+          <div class="label">$ ads --none</div>
+          <h3>Ad-free, guaranteed</h3>
+          <p>We don't run ads, sell attention, or partner with advertisers. Period.</p>
+        </div>
+        <div class="price-card glass">
+          <div class="label">$ data --local</div>
+          <h3>Privacy by default</h3>
+          <p>We don't harvest your data. If an app needs data to function, it stays on your device.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
 
   <!-- FOOTER -->
-  <footer class="footer">
-    <div class="footer-logo">Command Line Studios, LLC</div>
-    <p class="footer-tagline">Independent iOS app studio</p>
-    <div class="contact-block">
-      <div class="contact-label">Get in touch</div>
-      <a class="contact-email" href="mailto:support@cmdlinestudios.com">
-        ✉ support@cmdlinestudios.com
-      </a>
+  <footer class="site-footer">
+    <div class="footer-row">
+      <div>
+        <div class="footer-name">Command Line Studios, LLC</div>
+        <p class="footer-tag">Independent iOS app studio</p>
+      </div>
+      <div class="footer-contact">
+        <div class="label">// get in touch</div>
+        <a class="footer-mail glass" href="mailto:support@cmdlinestudios.com">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+          support@cmdlinestudios.com</a>
+      </div>
     </div>
     <p class="footer-copy">© 2026 Command Line Studios, LLC · All rights reserved</p>
   </footer>
 
+</div>
 </body>
 </html>

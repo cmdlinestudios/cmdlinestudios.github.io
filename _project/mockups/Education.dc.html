@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Education page</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:inherit;text-decoration:none}
+.glass{background:var(--glass);-webkit-backdrop-filter:blur(30px) saturate(140%);backdrop-filter:blur(30px) saturate(140%);border:1px solid var(--stroke);box-shadow:var(--shadow);}
+.navlink{padding:8px 12px;font-size:14px;white-space:nowrap;color:var(--muted);border-radius:10px}
+.navlink:hover{color:var(--fg)}
+.pulse{animation:pulse 8s ease-in-out infinite alternate}
+@keyframes pulse{from{opacity:.5;transform:scale(1)}to{opacity:.8;transform:scale(1.08)}}
+.orbit{transform-origin:120px 80px;animation:spin 16s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.shelf{display:flex;gap:14px;overflow-x:auto;padding:6px 2px 10px}
+.tile{flex:0 0 300px;display:flex;align-items:center;gap:16px;padding:16px 18px;border-radius:22px;cursor:pointer;text-align:left;font:inherit;color:inherit;transition:transform .35s cubic-bezier(.2,.8,.2,1),border-color .3s}
+.tile:hover{transform:translateY(-3px)}
+.stage{position:relative;height:600px;perspective:1800px;z-index:1}
+.stage-inner{position:absolute;inset:0;transform-style:preserve-3d}
+.shot{position:absolute;left:50%;top:50%;border-radius:30px;box-shadow:0 40px 80px -30px rgba(0,0,0,.55),0 0 0 1px rgba(255,255,255,.08);transition:transform .9s cubic-bezier(.2,.8,.2,1);will-change:transform;overflow:hidden}
+.shot img{display:block;width:100%;height:100%;object-fit:cover}
+.s-back{width:340px;height:453px;transform:translate(-50%,-56%) translateZ(-240px) rotateX(6deg);opacity:.9}
+.s-left{width:214px;height:465px;transform:translate(-102%,-46%) rotateY(20deg) rotateZ(-6deg) translateZ(30px)}
+.s-right{width:214px;height:465px;transform:translate(2%,-50%) rotateY(-20deg) rotateZ(6deg) translateZ(70px)}
+.stage:hover .s-back{transform:translate(-50%,-60%) translateZ(-280px) rotateX(0deg)}
+.stage:hover .s-left{transform:translate(-114%,-48%) rotateY(8deg) rotateZ(-3deg) translateZ(60px)}
+.stage:hover .s-right{transform:translate(14%,-48%) rotateY(-8deg) rotateZ(3deg) translateZ(90px)}
+.ph{display:flex;align-items:center;justify-content:center;text-align:center;padding:16px;box-sizing:border-box;border:2px dashed var(--stroke);background:var(--glass);font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted)}
+.chip{position:absolute;padding:10px 14px;border-radius:14px;font-size:13px;font-weight:600;white-space:nowrap;animation:bob 7s ease-in-out infinite alternate}
+@keyframes bob{from{transform:translateY(0)}to{transform:translateY(-10px)}}
+.card{position:relative;z-index:3}
+.reel{position:relative;height:560px;perspective:1400px;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}
+.plane{position:absolute;left:0;top:60px;transform:rotateX(14deg) rotateZ(-5deg);transform-style:preserve-3d}
+.track{display:flex;gap:28px;width:max-content;animation:reel 46s linear infinite}
+.reel:hover .track{animation-play-state:paused}
+@keyframes reel{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.frame{flex:none;border-radius:26px;overflow:hidden;box-shadow:0 30px 60px -28px rgba(0,0,0,.6);transition:transform .5s cubic-bezier(.2,.8,.2,1)}
+.frame:hover{transform:translateY(-14px) scale(1.03)}
+.frame img{display:block;width:100%;height:100%;object-fit:cover}
+.seg{padding:8px 16px;border-radius:10px;border:0;font:inherit;font-size:14px;font-weight:600;cursor:pointer}
+@media (max-width: 900px){.stage{height:460px}.stage-inner{transform:scale(.7);transform-origin:center}.chip{display:none}.reel{height:440px}.tile{flex-basis:260px}}
+@media (prefers-reduced-motion: reduce){.pulse,.orbit,.chip,.track{animation:none}.shot,.frame,.tile{transition:none}}
+</style>
+</helmet>
+<div style="--bg: {{t.bg}}; --fg: {{t.fg}}; --muted: {{t.muted}}; --glass: {{t.glass}}; --stroke: {{t.stroke}}; --hair: {{t.hair}}; --shadow: {{t.shadow}}; --accent: #FF6B2C; --accent-ink: #141414; position: relative; overflow: hidden; min-height: 100vh; background: var(--bg); color: var(--fg); font-family: 'Plus Jakarta Sans', system-ui, sans-serif; transition: background .4s, color .4s;">
+
+<div aria-hidden="true" style="position: absolute; inset: 0; pointer-events: none;">
+<div class="pulse" style="position: absolute; width: 560px; height: 560px; left: 8%; top: 720px; border-radius: 50%; background: var(--accent); filter: blur(140px); opacity: .5;"></div>
+<div class="pulse" style="position: absolute; width: 420px; height: 420px; right: -120px; top: 1700px; border-radius: 50%; background: var(--accent); filter: blur(140px); opacity: .4; animation-delay: -4s;"></div>
+</div>
+
+<header style="position: relative; z-index: 5; max-width: 1240px; margin: 0 auto; padding: 20px 24px 0;">
+<nav class="glass" aria-label="Main" style="display: flex; align-items: center; gap: 6px; padding: 8px 8px 8px 18px; border-radius: 18px; overflow-x: auto;">
+<a href="https://cmdlinestudios.com/index.html" style="display: flex; align-items: center; gap: 10px; margin-right: auto; padding-right: 16px; font-weight: 700; font-size: 15px; letter-spacing: -0.01em; white-space: nowrap;">
+<span aria-hidden="true" style="font-family: 'JetBrains Mono', monospace; color: var(--accent); font-weight: 500;">&gt;_</span>Command Line Studios</a>
+<a class="navlink" href="https://cmdlinestudios.com/categories/fitness.html">Fitness</a>
+<a class="navlink" href="https://cmdlinestudios.com/categories/productivity.html">Productivity</a>
+<a class="navlink" href="https://cmdlinestudios.com/categories/education.html" aria-current="page" style="color: var(--fg); background: var(--hair);">Education</a>
+<a class="navlink" href="https://cmdlinestudios.com/categories/games.html">Games</a>
+<a class="navlink" href="https://cmdlinestudios.com/privacy/index.html">Privacy</a>
+<a href="mailto:support@cmdlinestudios.com" style="padding: 10px 18px; border-radius: 12px; font-size: 14px; font-weight: 600; background: var(--accent); color: var(--accent-ink); white-space: nowrap;">Contact</a>
+<button type="button" onClick="{{toggle}}" aria-label="{{toggleLabel}}" style="width: 40px; height: 40px; flex: none; border-radius: 12px; border: 1px solid var(--stroke); background: transparent; color: var(--fg); cursor: pointer; display: flex; align-items: center; justify-content: center;">
+<sc-if value="{{dark}}" hint-placeholder-val="{{true}}">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>
+</sc-if>
+<sc-if value="{{light}}" hint-placeholder-val="{{false}}">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg>
+</sc-if>
+</button>
+</nav>
+</header>
+
+<main style="position: relative; z-index: 2; max-width: 1240px; margin: 0 auto; padding: 0 24px;">
+
+<section style="padding: 72px 0 32px; display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 32px;">
+<div style="flex: 1 1 520px; min-width: 0;">
+<a href="https://cmdlinestudios.com/index.html" style="display: inline-flex; align-items: center; gap: 8px; font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--muted);">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"></path></svg>cd ~/home</a>
+<div style="margin-top: 36px; font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--accent);">03 // education</div>
+<h1 style="margin: 12px 0 0; font-weight: 800; font-size: clamp(60px, 10vw, 148px); line-height: .9; letter-spacing: -0.06em;">Education</h1>
+<p style="margin: 26px 0 0; max-width: 540px; font-size: 19px; line-height: 1.6; color: var(--muted);">Interactive apps that make learning tangible — explore concepts by doing, not just reading.</p>
+</div>
+<svg width="260" height="174" viewBox="0 0 240 160" fill="none" aria-hidden="true" style="flex: none; color: var(--fg);">
+<ellipse cx="120" cy="80" rx="104" ry="36" stroke="currentColor" stroke-opacity=".25" stroke-width="2" transform="rotate(-14 120 80)"></ellipse>
+<ellipse cx="120" cy="80" rx="64" ry="22" stroke="currentColor" stroke-opacity=".18" stroke-width="2" transform="rotate(-14 120 80)"></ellipse>
+<circle cx="120" cy="80" r="20" fill="var(--accent)"></circle>
+<g class="orbit"><circle cx="216" cy="80" r="7" fill="currentColor"></circle></g>
+</svg>
+</section>
+
+<sc-if value="{{showShelf}}" hint-placeholder-val="{{true}}">
+<section aria-label="Apps in this category" style="padding: 8px 0 8px;">
+<div class="shelf" role="tablist">
+<sc-for list="{{shelf}}" as="a" hint-placeholder-count="2">
+<button type="button" role="tab" class="tile glass" aria-selected="{{a.sel}}" onClick="{{a.pick}}" style="border-color: {{a.ring}}; box-shadow: {{a.glow}};">
+<sc-if value="{{a.hasIcon}}" hint-placeholder-val="{{true}}">
+<img src="{{a.icon}}" alt="" style="width: 56px; height: 56px; border-radius: 14px; flex: none; display: block;">
+</sc-if>
+<sc-if value="{{a.noIcon}}" hint-placeholder-val="{{false}}">
+<span aria-hidden="true" style="width: 56px; height: 56px; border-radius: 14px; flex: none; background: var(--accent); color: var(--accent-ink); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 24px;">{{a.letter}}</span>
+</sc-if>
+<span style="min-width: 0;">
+<span style="display: block; font-weight: 800; font-size: 18px; letter-spacing: -0.02em;">{{a.short}}</span>
+<span style="display: block; margin-top: 2px; font-size: 13px; color: var(--muted);">{{a.sub}}</span>
+</span>
+</button>
+</sc-for>
+</div>
+</section>
+</sc-if>
+
+<section aria-label="{{app.name}}" style="display: flex; flex-wrap: wrap; align-items: center; gap: 24px; padding: 32px 0 80px;">
+
+<div class="stage" style="flex: 1 1 600px; min-width: 0;">
+<div class="stage-inner">
+<div aria-hidden="true" style="position: absolute; left: 50%; bottom: 40px; width: 64%; height: 70px; transform: translateX(-50%); border-radius: 50%; background: var(--accent); filter: blur(50px); opacity: .45;"></div>
+<sc-if value="{{app.hasShots}}" hint-placeholder-val="{{true}}">
+<sc-if value="{{app.hasPad}}" hint-placeholder-val="{{true}}">
+<div class="shot s-back"><img src="{{app.back}}" alt="{{app.backAlt}}"></div>
+</sc-if>
+<div class="shot s-left"><img src="{{app.left}}" alt="{{app.leftAlt}}"></div>
+<div class="shot s-right"><img src="{{app.right}}" alt="{{app.rightAlt}}"></div>
+</sc-if>
+<sc-if value="{{app.noShots}}" hint-placeholder-val="{{false}}">
+<div class="shot s-back ph">[ iPad screenshot ]</div>
+<div class="shot s-left ph">[ iPhone screenshot ]</div>
+<div class="shot s-right ph">[ iPhone screenshot ]</div>
+</sc-if>
+<sc-for list="{{app.chips}}" as="c" hint-placeholder-count="3">
+<div class="chip glass" style="{{c.pos}}">{{c.text}}</div>
+</sc-for>
+</div>
+</div>
+
+<div class="glass card" style="flex: 1 1 400px; min-width: 0; padding: 36px; border-radius: 30px; display: flex; flex-direction: column; gap: 20px;">
+<sc-if value="{{app.live}}" hint-placeholder-val="{{true}}">
+<span style="align-self: flex-start; padding: 7px 12px; border-radius: 10px; background: var(--accent); color: var(--accent-ink); font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 500;">now available on the App Store</span>
+</sc-if>
+<sc-if value="{{app.beta}}" hint-placeholder-val="{{false}}">
+<span style="align-self: flex-start; padding: 7px 12px; border-radius: 10px; border: 1px solid var(--accent); color: var(--accent); font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 500;">in beta testing</span>
+</sc-if>
+<h2 style="margin: 0; font-weight: 800; font-size: clamp(34px, 3.6vw, 46px); line-height: 1; letter-spacing: -0.045em;">{{app.name}}</h2>
+<div style="font-family: 'JetBrains Mono', monospace; font-size: 15px;"><span style="color: var(--accent); font-weight: 500;">{{app.price}}</span> <span style="color: var(--muted);">// one-time purchase</span></div>
+<p style="margin: 0; font-size: 16px; line-height: 1.65; color: var(--muted);">{{app.desc}}</p>
+<ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; font-size: 15px; line-height: 1.5;">
+<sc-for list="{{app.points}}" as="p" hint-placeholder-count="2">
+<li style="display: flex; gap: 10px;"><span aria-hidden="true" style="color: var(--accent); font-weight: 700;">✓</span>{{p.text}}</li>
+</sc-for>
+</ul>
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 16px; padding-top: 20px; border-top: 1px solid var(--hair);">
+<sc-if value="{{app.live}}" hint-placeholder-val="{{true}}">
+<a href="#app-store-link" aria-label="Download {{app.short}} on the App Store" style="display: inline-flex;"><img src="/_blob/908e6ac704a49be3f02f0f6cf570bb59" alt="Download on the App Store" style="height: 52px; width: auto; display: block;"></a>
+</sc-if>
+<sc-if value="{{app.beta}}" hint-placeholder-val="{{false}}">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--muted);">// in beta testing · coming soon to the App Store</span>
+</sc-if>
+<a href="{{app.privacy}}" style="display: inline-flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; color: var(--muted);">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg>View privacy policy</a>
+</div>
+</div>
+</section>
+
+<sc-if value="{{app.hasGallery}}" hint-placeholder-val="{{true}}">
+<section aria-label="Screenshots" style="padding: 20px 0 20px;">
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 20px;">
+<div>
+<div style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--accent);">// screenshots</div>
+<h2 style="margin: 12px 0 0; font-weight: 800; font-size: clamp(34px, 4.4vw, 56px); line-height: 1; letter-spacing: -0.045em;">{{app.short}}</h2>
+</div>
+<sc-if value="{{app.hasPad}}" hint-placeholder-val="{{true}}">
+<div class="glass" role="group" aria-label="Device" style="display: flex; gap: 4px; padding: 4px; border-radius: 14px;">
+<button type="button" class="seg" onClick="{{showPhone}}" aria-pressed="{{phoneOn}}" style="background: {{phoneBg}}; color: {{phoneFg}};">iPhone</button>
+<button type="button" class="seg" onClick="{{showPad}}" aria-pressed="{{padOn}}" style="background: {{padBg}}; color: {{padFg}};">iPad</button>
+</div>
+</sc-if>
+</div>
+</section>
+</sc-if>
+</main>
+
+<sc-if value="{{app.hasGallery}}" hint-placeholder-val="{{true}}">
+<div class="reel" style="position: relative; z-index: 2;">
+<div class="plane">
+<div class="track">
+<sc-for list="{{reel}}" as="s" hint-placeholder-count="12">
+<div class="frame" style="width: {{s.w}}; height: {{s.h}};"><img src="{{s.src}}" alt="{{s.alt}}"></div>
+</sc-for>
+</div>
+</div>
+</div>
+</sc-if>
+
+<footer style="position: relative; z-index: 2; max-width: 1240px; margin: 0 auto; padding: 60px 24px 40px;">
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 28px; padding-top: 36px; border-top: 1px solid var(--stroke);">
+<div>
+<div style="font-weight: 800; font-size: clamp(28px, 4vw, 44px); letter-spacing: -0.045em;">Command Line Studios, LLC</div>
+<div style="margin-top: 6px; font-size: 15px; color: var(--muted);">Independent iOS app studio</div>
+</div>
+<a href="mailto:support@cmdlinestudios.com" class="glass" style="display: inline-flex; align-items: center; gap: 10px; padding: 14px 20px; border-radius: 14px; font-size: 15px; font-weight: 600;">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="M3 7l9 6 9-6"></path></svg>
+support@cmdlinestudios.com</a>
+</div>
+<p style="margin: 28px 0 0; font-size: 13px; color: var(--muted);">© 2026 Command Line Studios, LLC · All rights reserved</p>
+</footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"mode":{"editor":"enum","options":["Dark","Light"],"default":"Dark","section":"Theme"},"$preview":{"width":1440,"height":2300}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const st = this.state || {};
+    const dark = (st.mode || this.props.mode || 'Dark') === 'Dark';
+    const t = dark
+      ? { bg: '#0B0B0D', fg: '#F5F5F4', muted: '#A1A1A6', glass: 'rgba(255,255,255,0.05)', stroke: 'rgba(255,255,255,0.11)', hair: 'rgba(255,255,255,0.07)', shadow: '0 30px 60px -24px rgba(0,0,0,0.7)' }
+      : { bg: '#F4F4F2', fg: '#0E0E10', muted: '#55555C', glass: 'rgba(255,255,255,0.58)', stroke: 'rgba(14,14,16,0.08)', hair: 'rgba(14,14,16,0.05)', shadow: '0 24px 50px -28px rgba(20,20,30,0.28)' };
+    const b = (id) => '/_blob/' + id;
+    const apps = [
+      {
+        id: 'launchpad', short: 'Launchpad', sub: 'Planetary Simulator', name: 'Launchpad: Planetary Simulator',
+        icon: b('583584d91c369f754ea6ff5f81e3703b'), letter: 'L', status: 'live', price: '$1.99',
+        desc: 'Animate projectile motion side-by-side across any two of the 10 solar system bodies — Mercury through Pluto — each with its own standard textbook surface-gravity value. Set your launch speed, angle, and height, hit Launch, and watch both trajectories race to the ground with full stats: range, max height, and flight time.',
+        points: ['Built for physics students & professors — accuracy-first, hand-verified physics', 'Runs on iPhone, iPad, and Mac (Apple silicon)'],
+        iphone: ['ba18dfb0b0e027e4db16155b4fbde911', '321f9e10134605964623cc71c2538bd0', 'ce8b42b0ab3c20c79931ba437a159a25', '9b4b9d568db57c22647191c6d1a0c3a4', '0025d0489b52efc46962afb52028cd54', '7f461563483188dd26c3a88c1209679a'],
+        ipad: ['67327688bcbed97f6e86a7a0579e94cc', 'f384e4ae111eb4ff82abf5ff08ac401a', '72b1ef4c52282634b271861a8f0b10ee', 'be847779b6c49b63755981a33ca2a490', '51a672c24469a2d6ff41341a8bf2f988', '412bec4f65faa777d7a422079d11279e'],
+        hero: { back: 0, left: 1, right: 0 },
+        chips: [
+          { text: '10 solar system bodies', pos: 'left: 0; top: 10%;' },
+          { text: 'Mercury → Pluto', pos: 'left: 4%; bottom: 14%; animation-delay: -3s;' },
+          { text: 'Hand-verified physics', pos: 'right: 0; top: 4%; animation-delay: -5s;' }
+        ]
+      },
+      {
+        id: 'equation-sheet', short: '[App name]', sub: '[Physics equation sheet]', name: '[Second app name: physics equation sheet]',
+        icon: '', letter: 'E', status: 'live', price: '[$ price]',
+        desc: '[Placeholder description. Your mobile physics equation sheet goes here: what it covers, who it is for, and why it beats a paper formula sheet.]',
+        points: ['[Key point one]', '[Key point two]'],
+        iphone: [], ipad: [], hero: null, chips: []
+      }
+    ];
+    const idx = Math.min(st.app || 0, apps.length - 1);
+    const a = apps[idx];
+    const hasShots = a.iphone.length >= 2;
+    const hasPad = a.ipad.length > 0;
+    const device = hasPad ? (st.device || 'iphone') : 'iphone';
+    const phone = device === 'iphone';
+    const ids = phone ? a.iphone : a.ipad;
+    const w = phone ? '212px' : '348px';
+    const h = phone ? '460px' : '464px';
+    const one = ids.map((id, i) => ({ src: b(id), w, h, alt: a.short + ' ' + (phone ? 'iPhone' : 'iPad') + ' screenshot ' + (i + 1) }));
+    const app = {
+      name: a.name, short: a.short, price: a.price, desc: a.desc,
+      points: a.points.map((p) => ({ text: p })),
+      live: a.status === 'live', beta: a.status === 'beta',
+      hasShots, noShots: !hasShots, hasPad: hasShots && hasPad,
+      hasGallery: a.iphone.length >= 4,
+      back: hasPad ? b(a.ipad[a.hero.back]) : '', left: hasShots ? b(a.iphone[a.hero.left]) : '', right: hasShots ? b(a.iphone[a.hero.right]) : '',
+      backAlt: a.short + ' on iPad', leftAlt: a.short + ' on iPhone', rightAlt: a.short + ' on iPhone',
+      chips: a.chips,
+      privacy: 'https://cmdlinestudios.com/privacy/index.html#' + a.id
+    };
+    const shelf = apps.map((x, i) => ({
+      short: x.short, sub: x.sub, icon: x.icon, letter: x.letter,
+      hasIcon: !!x.icon, noIcon: !x.icon,
+      sel: i === idx ? 'true' : 'false',
+      ring: i === idx ? '#FF6B2C' : t.stroke,
+      glow: i === idx ? '0 0 0 1px #FF6B2C, 0 20px 40px -20px rgba(255,107,44,0.55)' : t.shadow,
+      pick: () => this.setState({ app: i, device: 'iphone' })
+    }));
+    const on = { bg: '#FF6B2C', fg: '#141414' };
+    const off = { bg: 'transparent', fg: t.muted };
+    return {
+      t, dark, light: !dark, app, shelf, showShelf: apps.length > 1,
+      toggleLabel: dark ? 'Switch to light mode' : 'Switch to dark mode',
+      toggle: () => this.setState({ mode: dark ? 'Light' : 'Dark' }),
+      reel: one.concat(one),
+      phoneOn: phone ? 'true' : 'false', padOn: phone ? 'false' : 'true',
+      phoneBg: phone ? on.bg : off.bg, phoneFg: phone ? on.fg : off.fg,
+      padBg: phone ? off.bg : on.bg, padFg: phone ? off.fg : on.fg,
+      showPhone: () => this.setState({ device: 'iphone' }),
+      showPad: () => this.setState({ device: 'ipad' })
+    };
+  }
+}
+</script>
+</body>
+</html>
